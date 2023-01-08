@@ -24,6 +24,8 @@ namespace Andronic_Paul_Proiect.Models
         public DateTime CreatedDate { get; set; }
        
         public Faculty Faculty { get; set; }
+        public ICollection<StudentExam> StudentExam { get; set; }
+
 
     }
 }
