@@ -20,13 +20,29 @@ namespace Andronic_Paul_Proiect.Pages.Students
         }
 
         public IList<Student> Student { get;set; } = default!;
-
-        public async Task OnGetAsync()
+        public StudentData StudentData { get; set; }
+        public int StudentID { get; set; }
+        public int ExamID { get; set; }
+        public async Task OnGetAsync(int? id, int? examID)
         {
-            if (_context.Student != null)
+            StudentData = new StudentData();
+
+            StudentData.Students = await _context.Student
+            .Include(b => b.Faculty)
+            .Include(b => b.StudentExam)
+            .ThenInclude(b => b.Exam)
+            .AsNoTracking()
+            .OrderBy(b => b.LastName)
+            .ToListAsync();
+            if (id != null)
             {
-                Student = await _context.Student.Include(b => b.Faculty).ToListAsync();
+                StudentID = id.Value;
+                Student student = StudentData.Students
+                .Where(i => i.ID == id.Value).Single();
+                StudentData.Exams = student.StudentExam.Select(s => s.Exam);
             }
         }
+
+       
     }
 }

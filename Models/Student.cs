@@ -11,10 +11,16 @@ namespace Andronic_Paul_Proiect.Models
     {
         [Display(Name = "Student ID")]
         public int ID { get; set; }
+
+        [Required, StringLength(50, MinimumLength = 2)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required, StringLength(50, MinimumLength = 2)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [Required, StringLength(50, MinimumLength = 2)]
         [Display(Name = "Email Address")]
         public string Email { get; set; }
         [Display(Name = "Phone Number")]

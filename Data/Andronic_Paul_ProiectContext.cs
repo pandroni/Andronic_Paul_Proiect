@@ -21,5 +21,9 @@ namespace Andronic_Paul_Proiect.Data
         public DbSet<Andronic_Paul_Proiect.Models.Exam> Exam { get; set; }
 
         public DbSet<Andronic_Paul_Proiect.Models.StudentExam> StudentExam { get; set; }
+
+
+        public DbSet<Andronic_Paul_Proiect.Models.Admin> Admin { get; set; }
+
     }
 }
