@@ -4,6 +4,7 @@ using Andronic_Paul_Proiect.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Andronic_Paul_Proiect.Migrations
 {
     [DbContext(typeof(Andronic_Paul_ProiectContext))]
-    partial class Andronic_Paul_ProiectContextModelSnapshot : ModelSnapshot
+    [Migration("20230112094340_Exams")]
+    partial class Exams
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
