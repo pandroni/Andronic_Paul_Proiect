@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "/{id:int?}"
+
 @model Andronic_Paul_Proiect.Pages.Students.IndexModel
 
 @{
@@ -31,12 +32,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.Student[0].Faculty.FacultyName)
             </th>
+           <th>
+                @Html.DisplayNameFor(model => model.Student[0].StudentExam)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Student) {
-        <tr>
+        @foreach (var item in Model.StudentData.Students)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.StudentID)
+            {
+                selectedRow = "table-success";
+            }
+     <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
@@ -55,6 +65,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Faculty.FacultyName)
             </td>
+            <td>
+                @{foreach (var category in item.StudentExam)
+                        {
+                            @category.Exam.ID @: @category.Exam.ExamName <br />
+                        }
+                    }
+                </td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

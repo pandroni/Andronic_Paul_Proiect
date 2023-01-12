@@ -1,12 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Andronic_Paul_Proiect.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Andronic_Paul_ProiectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Andronic_Paul_ProiectContext") ?? throw new InvalidOperationException("Connection string 'Andronic_Paul_ProiectContext' not found.")));
+
+builder.Services.AddDbContext<IdentityLibraryContext>(options =>
+
+options.UseSqlServer(builder.Configuration.GetConnectionString("Andronic_Paul_ProiectContext") ?? throw new InvalidOperationException("Connection string 'Nume_Pren_Lab2Context' not found.")));
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+options.SignIn.RequireConfirmedAccount = true)
+ .AddEntityFrameworkStores<IdentityLibraryContext>();
+
 
 var app = builder.Build();
 
@@ -22,6 +31,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
