@@ -8,10 +8,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Andronic_Paul_Proiect.Data;
 using Andronic_Paul_Proiect.Models;
 using System.Security.Policy;
+using Andronic_Paul_Proiect.Models;
+using System.Drawing.Printing;
 
 namespace Andronic_Paul_Proiect.Pages.Students
 {
-    public class CreateModel : PageModel
+    public class CreateModel : StudentExamPageModel
     {
         private readonly Andronic_Paul_Proiect.Data.Andronic_Paul_ProiectContext _context;
 
@@ -22,27 +24,55 @@ namespace Andronic_Paul_Proiect.Pages.Students
 
         public IActionResult OnGet()
         {
-            ViewData["PublisherID"] = new SelectList(_context.Set<Faculty>(), "ID","FacultyName");
+            ViewData["FacultyID"] = new SelectList(_context.Set<Faculty>(), "ID","FacultyName");
+            var student = new Student();
+            student.StudentExam = new List<StudentExam>();
+            PopulateAssignedExamData(_context, student);
 
             return Page();
         }
 
         [BindProperty]
         public Student Student { get; set; }
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string[] selectedExams)
         {
-          if (!ModelState.IsValid)
+            var newStudent = new Student();
+            if (selectedExams != null)
             {
-                return Page();
+                newStudent.StudentExam = new List<StudentExam>();
+                foreach (var exam in selectedExams)
+                {
+                    var examToAdd = new StudentExam
+                    {
+                        ExamID = int.Parse(exam)
+                    };
+
+                    newStudent.StudentExam.Add(examToAdd);
+                }
+            }
+            if (selectedExams == null)
+            {
+                var examToAdd = new StudentExam();
+                newStudent.StudentExam.Add(examToAdd);
             }
 
-            _context.Student.Add(Student);
-            await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            if (await TryUpdateModelAsync<Student>(
+            newStudent,
+            "Student",
+          i => i.FirstName, i => i.LastName, i => i.Email, i => i.PhoneNumber, i => i.CreatedDate, i => i.FacultyID))
+              
+            {
+                _context.Student.Add(newStudent);
+                await _context.SaveChangesAsync();
+               
+                return RedirectToPage("./Index");
+            }
+            PopulateAssignedExamData(_context, newStudent);
+            return Page();
         }
     }
 }

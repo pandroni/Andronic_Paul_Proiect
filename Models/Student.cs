@@ -28,8 +28,8 @@ namespace Andronic_Paul_Proiect.Models
         public decimal PhoneNumber { get; set; }
         [DataType(DataType.Date)]
         public DateTime CreatedDate { get; set; }
-       
-        public Faculty Faculty { get; set; }
-
+        public int FacultyID { get; set; }
+        public Faculty ?Faculty { get; set; }
+        public ICollection<StudentExam> ?StudentExam { get; set; }
     }
 }
