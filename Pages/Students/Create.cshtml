@@ -39,11 +39,41 @@
                 <span asp-validation-for="Student.CreatedDate" class="textdanger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.Faculty.FacultyName" class="control-label">Faculty Name</label>
-                <select asp-for="Student.Faculty.FacultyName" class="form-control" asp-items="ViewBag.PublisherID">
+                <label asp-for="Student.FacultyID" class="control-label">Faculty Name</label>
+                <select asp-for="Student.FacultyID" class="form-control" asp-items="ViewBag.FacultyID">
                 </select>
-                <span asp-validation-for="Student.Faculty.FacultyName" class="text-danger"></span>
+                <span asp-validation-for="Student.FacultyID" class="text-danger"></span>
             </div>
+ 
+            <div class="form-group">
+ <div class="table">
+ <table>
+ <tr>
+ @{
+ int cnt = 0;
+ foreach (var cat in Model.AssignedExamDataList)
+ {
+ if (cnt++ % 3 == 0)
+{
+@:</tr><tr>
+ }
+@:<td>
+ <input type="checkbox"
+ name="selectedExams"
+ value="@cat.ExamID"
+ @(Html.Raw(cat.Assigned ?
+"checked=\"checked\"" : "")) />
+ @cat.ExamID @: @cat.ExamName
+ @:</td>
+ }
+ @:</tr>
+ }
+ </table>
+ </div>
+ </div>
+
+
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
