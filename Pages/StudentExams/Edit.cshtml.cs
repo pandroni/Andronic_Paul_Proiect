@@ -36,8 +36,8 @@ namespace Andronic_Paul_Proiect.Pages.StudentExams
                 return NotFound();
             }
             StudentExam = studentexam;
-           ViewData["ExamID"] = new SelectList(_context.Exam, "ID", "ID");
-           ViewData["StudentID"] = new SelectList(_context.Student, "ID", "ID");
+            ViewData["ExamID"] = new SelectList(_context.Set<Exam>(), "ID", "ExamName");
+            ViewData["StudentID"] = new SelectList(_context.Set<Student>(), "ID", "FirstName");
             return Page();
         }
 

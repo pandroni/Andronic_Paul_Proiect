@@ -24,8 +24,8 @@ namespace Andronic_Paul_Proiect.Models
         [Display(Name = "Email Address")]
         public string Email { get; set; }
         [Display(Name = "Phone Number")]
-        [Column(TypeName = "decimal(10, 0)")]
-        public decimal PhoneNumber { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter valid Phone Number")]
+        public int PhoneNumber { get; set; }
         [DataType(DataType.Date)]
         public DateTime CreatedDate { get; set; }
         public int FacultyID { get; set; }
