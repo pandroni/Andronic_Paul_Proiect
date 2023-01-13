@@ -21,8 +21,9 @@ namespace Andronic_Paul_Proiect.Pages.StudentExams
 
         public IActionResult OnGet()
         {
-        ViewData["ExamID"] = new SelectList(_context.Exam, "ID", "ID");
-        ViewData["StudentID"] = new SelectList(_context.Student, "ID", "ID");
+        ViewData["ExamID"] = new SelectList(_context.Set<Exam>(), "ID", "ExamName");
+        ViewData["StudentID"] = new SelectList(_context.Set<Student>(), "ID", "FirstName");
+     
             return Page();
         }
 
